@@ -1,0 +1,204 @@
+// 
+
+const students = [
+    { fullName: "Klindgang", age: 20, className: "BFL-WEB2-BEG", nickname: "", matricNumber: "", score: "", grade: "", attendance: {}, subject: {} },
+    { fullName: "Bosan", age: 21, className: "BFL-WEB2-BEG", nickname: "", matricNumber: "", score: "", grade: "", attendance: {}, subject: {} },
+    { fullName: "Kelvin", age: 19, className: "BFL-WEB2-BEG", nickname: "", matricNumber: "", score: "", grade: "", attendance: {}, subject: {} },
+    { fullName: "Vincent", age: 22, className: "BFL-WEB2-ADV", nickname: "", matricNumber: "", score: "", grade: "", attendance: {}, subject: {} },
+    { fullName: "IsntShe", age: 20, className: "BFL-WEB2-ADV", nickname: "", matricNumber: "", score: "", grade: "", attendance: {}, subject: {} },
+    { fullName: "MakP", age: 23, className: "BFL-WEB2-ADV", nickname: "", matricNumber: "", score: "", grade: "", attendance: {}, subject: {} },
+    { fullName: "Max", age: 19, className: "BFL-WEB2-INT", nickname: "", matricNumber: "", score: "", grade: "", attendance: {}, subject: {} },
+    { fullName: "BigJosh", age: 24, className: "BFL-WEB2-INT", nickname: "", matricNumber: "", score: "", grade: "", attendance: {}, subject: {} },
+    { fullName: "Cheta", age: 21, className: "BFL-WEB2-INT", nickname: "", matricNumber: "", score: "", grade: "", attendance: {}, subject: {} },
+    { fullName: "John", age: 22, className: "BFL-WEB2-INT", nickname: "", matricNumber: "", score: "", grade: "", attendance: {}, subject: {} }
+];
+
+// iterating functions for scores
+function itterate(students) {
+    let passed = [];
+    let failed = [];
+    for (let i = 0; i < students.length; i++) {
+        if (students[i].score >= 75) {
+            passed.push(students[i])
+        } else if (students[i].score <= 40) {
+            failed.push(students[i])
+        }
+    }
+    console.log("Passed:", passed)
+    console.log("Failed:", failed)
+}
+
+// grading function to grade students score
+function grade(students) {
+    for (let i = 0; i < students.length; i++) {
+        let score = students[i].score;
+        switch (true) {
+            case score >= 0 && score <= 20:
+                students[i].grade = "F"
+                break;
+            case score >= 21 && score <= 30:
+                students[i].grade = "E"
+                break;
+            case score >= 31 && score <= 49:
+                students[i].grade = "D"
+                break;
+            case score >= 50 && score <= 65:
+                students[i].grade = "C"
+                break;
+            case score >= 66 && score <= 80:
+                students[i].grade = "B"
+                break;
+            case score >= 81 && score <= 100:
+                students[i].grade = "A"
+                break;
+            default:
+                "Invalid Score"
+                break;
+        }
+    }
+    return students;
+}
+
+// classed for each of the students
+// function classes(students) {
+//     let classes = ["BFL-WEB2-BEG", "BFL-WEB2-ADV", "BFL-WEB2-INT"];
+//     for (let i = 0; i < students.length; i++) {
+//         students[i].className = classes[Math.floor(Math.random() * classes.length)]
+//     }
+
+//     return students
+// }
+
+// fullname function to ensure that all fullname is above 5 letters and above 2 sentence
+function fullname(students) {
+    let verifiedname = [];
+    let unverifiedname = [];
+    for (let i = 0; i < students.length; i++) {
+        if (students[i].fullName.length >= 5) {
+            verifiedname.push(students[i])
+        } else {
+            unverifiedname.push(students[i])
+        }
+    }
+    console.log("VerifiedNames: ", verifiedname)
+    console.log("UnVerifiedNames: ", unverifiedname)
+
+    function getRandomNames(numbers) {
+        let result = ""
+        let alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        for (let i = 0; i < numbers; i++) {
+            result += alphabets[Math.floor(Math.random() * alphabets.length)]
+        }
+
+        return result
+    }
+
+    for (let i = 0; i < students.length; i++) {
+        students[i].fullName += " " + getRandomNames(5);
+        students[i].fullName += " " + getRandomNames(5);
+    }
+
+    return students
+}
+
+// nickname functions to ensure that all user's has a generated nickname
+function nickname(students) {
+    for (let i = 0; i < students.length; i++) {
+        let nick = "";
+        let scorenow = students[i].score
+        result = students[i].fullName.split(" ")
+        for (let j = 0; j < result.length; j++) {
+            nick += result[j][0]
+        }
+        nick += scorenow;
+        students[i].nickname = nick;
+    }
+
+    return students
+}
+
+// subject function to ensure all students has his/her subjects
+function subject(students) {
+    for (let i = 0; i < students.length; i++) {
+        if (students[i].className === "BFL-WEB2-BEG") {
+            students[i].subject = {
+                Maths: Math.floor(Math.random() * (100 - 45 + 1)) + 45,
+                English: Math.floor(Math.random() * (100 - 45 + 1)) + 45,
+                JavaScript: Math.floor(Math.random() * (100 - 45 + 1)) + 45
+            };
+        } else if (students[i].className === "BFL-WEB2-INT") {
+            students[i].subject = {
+                Maths: Math.floor(Math.random() * (100 - 45 + 1)) + 45,
+                English: Math.floor(Math.random() * (100 - 45 + 1)) + 45,
+                React: Math.floor(Math.random() * (100 - 45 + 1)) + 45
+            };
+        } else if (students[i].className === "BFL-WEB2-ADV") {
+            students[i].subject = {
+                Maths: Math.floor(Math.random() * (100 - 45 + 1)) + 45,
+                English: Math.floor(Math.random() * (100 - 45 + 1)) + 45,
+                NodeJS: Math.floor(Math.random() * (100 - 45 + 1)) + 45
+            };
+        }
+
+        // Average the three subjects and push to score
+        const values = Object.values(students[i].subject);
+        const total = values.reduce((sum, v) => sum + v, 0);
+        students[i].score = Math.ceil(total / 3);   
+
+        console.log(`${students[i].name}: ${total}/300 → Score:${students[i].score}`);
+    }
+}   
+
+// matric_number function to ensure all students has a matric number
+function matricNumber(students) {
+for (let i= 0; i < students.length; i++) {
+    if (students[i].className === "BFL-WEB2-BEG") {
+        students[i].matricNumber = `2026/BFL/BEG/${(Math.floor(Math.random() * (1000 - 100 + 1))) + 100}`
+        console.log(students[i].matricNumber)
+    }
+    else if (students[i].className === "BFL-WEB2-INT") {
+        students[i].matricNumber = `2026/BFL/INT/${(Math.floor(Math.random() * (1000 - 100 + 1))) + 100}`
+        console.log(students[i].matricNumber)
+    }
+    else (students[i].className === "BFL-WEB2-ADV") 
+        students[i].matricNumber = `2026/BFL/ADV/${(Math.floor(Math.random() * (1000 - 100 + 1))) + 100}`
+        console.log(students[i].matricNumber)
+    }
+    
+}
+// fuction for attendance and bonus marks 
+function attendance() {
+  const days = [true, false];
+  for (let i = 0; i < students.length; i++) {
+    const att = {
+      Monday:    days[Math.floor(Math.random() * days.length)],
+      Tuesday:   days[Math.floor(Math.random() * days.length)],
+      Wednesday: days[Math.floor(Math.random() * days.length)],
+      Thursday:  days[Math.floor(Math.random() * days.length)],
+      Friday:    days[Math.floor(Math.random() * days.length)]
+    };
+    students[i].attendance = att;
+
+    // Score THIS student's attendance
+    const values = Object.values(att); // [true, false, true, ...]
+    const attendedCount = values.filter(v => v).length;
+
+    let bonus = 0;
+    if (attendedCount === 5) bonus += 10;  
+    else if (attendedCount >= 3) bonus += 5;  
+
+    const previousScore = students[i].score;   // ← save it first
+    students[i].score += bonus;
+    console.log(`${students[i].name}: ${attendedCount}/5 → Score: ${bonus}`);
+  }
+}   
+
+// itterate(students)
+// console.log("ClassName:", classes(students))
+console.log("SurnName: ", fullname(students))
+console.log("NickName: ", nickname(students))
+subject(students)
+matricNumber(students)
+attendance(students)
+console.log("Grading:", grade(students))
+console.log(students)
